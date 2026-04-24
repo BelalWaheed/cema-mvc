@@ -17,14 +17,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.23" />
     <PackageReference Include="Tailwind.Extensions.AspNetCore" Version="1.1.2" />
   </ItemGroup>
 	<PropertyGroup>
 		<TailwindCli>$(MSBuildProjectDirectory)\tailwindcss.exe</TailwindCli>
 	</PropertyGroup>
 
-	<Target Name="TailwindBuild" BeforeTargets="Build"
-			Condition="'$(Configuration)' == 'Release'">
+	<Target Name="TailwindBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Release'">
 		<Exec Command="$(TailwindCli) -i ./wwwroot/css/site.css -o ./wwwroot/css/styles.css --minify" />
 	</Target>
 	
