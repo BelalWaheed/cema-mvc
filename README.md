@@ -1,6 +1,6 @@
 # CEMA - Cinema Management System 🎬
 
-CEMA is a modern Cinema Management System built with **ASP.NET Core MVC** and **Tailwind CSS**. It manages movies, screenings, halls, and seat bookings.
+CEMA is a modern Cinema Management System built with **ASP.NET Core MVC** . It manages movies, screenings, halls, and seat bookings.
 
 ---
 
@@ -63,25 +63,6 @@ git commit -m "Added [feature name] or Fixed [issue]"
 # Push to your remote branch
 git push origin [your-branch-name]
 ```
-
----
-
-## Styling (Tailwind CSS)
-
-The project uses **Tailwind CSS** via a standalone CLI (`tailwindcss.exe`). Since this file is ignored by Git, every collaborator must set it up manually:
-
-### 1. Download & Install
-
-1.  Download the Windows executable: **[tailwindcss-windows-x64.exe](https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-windows-x64.exe)**.
-2.  **Rename** the downloaded file to exactly `tailwindcss.exe`.
-3.  **Place** it in the project root folder (next to `cema.csproj`).
-
-### 2. How it Works
-
-When you run the app in Development mode (`F5`), it automatically starts Tailwind to watch for changes:
-
-- **Input**: `wwwroot/css/site.css`
-- **Output**: `wwwroot/css/styles.css`
 
 ---
 

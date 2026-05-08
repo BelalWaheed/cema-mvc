@@ -1,33 +1,22 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace cema.Models
+namespace CemaApp.Models
 {
-    [Table("Seat")] // 2. Force SQL Server to name the table 
+    [Table("Seat")]
 
     public class Seat
     {
-        [Key]
         public int Id { get; set; }
 
-        public int Hall_Id { get; set; }
+        public int HallId { get; set; }
 
-        [Required]
-        [MaxLength(10)]
-        public string Row { get; set; } = string.Empty;
+        public string Row { get; set; } // A, B, C...
 
-        public int Number { get; set; }
+        public int Number { get; set; } // 1, 2, 3...
 
-        [Required]
-        [MaxLength(50)]
-        public string SeatType { get; set; } = string.Empty;
-
-        // Navigation properties
-        [ForeignKey(nameof(Hall_Id))]
-        public Hall? Hall { get; set; }
-
-        public ICollection<BookingSeat> BookingSeats { get; set; } = new List<BookingSeat>();
-        public ICollection<SeatLock> SeatLocks { get; set; } = new List<SeatLock>();
+        // Navigation
+        public Hall Hall { get; set; }
+        public ICollection<BookingSeat> BookingSeats { get; set; }
+        public ICollection<SeatLock> SeatLocks { get; set; } 
     }
 }

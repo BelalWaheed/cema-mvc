@@ -1,18 +1,3 @@
-# User-specific files
-*.user
-*.userosscache
-*.sln.docstates
-
-# Visual Studio cache and settings
-.vs/
-
-# Build results
-[Bb]in/
-[Oo]bj/
-
-# Local Environment Settings
-appsettings.Development.json
-
-# Tailwind Standalone (Already discussed)
-tailwindcss.exe
-wwwroot/css/styles.css
+.vs
+bin
+obj
