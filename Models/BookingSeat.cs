@@ -1,25 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace cema.Models
+namespace CemaApp.Models
 {
-    [Table("BookingSeat")] // 2. Force SQL Server to name the table 
+    [Table("BookingSeat")]
+
     public class BookingSeat
     {
-        [Key]
         public int Id { get; set; }
 
         public int BookingId { get; set; }
+
         public int SeatId { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal PriceAtBooking { get; set; }
-
-        // Navigation properties
-        [ForeignKey(nameof(BookingId))]
-        public Booking? Booking { get; set; }
-
-        [ForeignKey(nameof(SeatId))]
-        public Seat? Seat { get; set; }
+        // Navigation
+        public Booking Booking { get; set; }
+        public Seat Seat { get; set; }
     }
 }

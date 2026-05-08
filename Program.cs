@@ -1,31 +1,45 @@
-using cema.Data;
+using CemaApp.Data;
+using CemaApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Tailwind; 
-namespace cema
+
+namespace CemaApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-
-
-         
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
-            // Register AppDbContext with your SQL Server connection string
+            // 1. Database Configuration
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // 2. Identity Configuration
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+            // 3. Cookie Configuration
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            });
+
+            builder.Services.AddControllersWithViews();
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -34,18 +48,27 @@ namespace cema
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
-            if (app.Environment.IsDevelopment())
+            // 4. DB seeder
+            using (var scope = app.Services.CreateScope())
             {
-                _ = app.RunTailwind("./tailwindcss.exe",
-                    "-i ./wwwroot/css/site.css -o ./wwwroot/css/styles.css --watch");
+                var services = scope.ServiceProvider;
+                try
+                {
+                    await DbSeeder.SeedRolesAndAdminAsync(services);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Seeding error: {ex.Message}");
+                }
             }
+
             app.Run();
         }
     }
