@@ -1,0 +1,30 @@
+@model IEnumerable<CemaApp.Models.Movie>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+<div class="container-fluid px-lg-5 mt-4">
+    <h2 class="mb-4 fw-bold">Now Showing</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+        @foreach (var movie in Model)
+        {
+            <div class="col">
+                <div class="movie-card h-100 shadow">
+                    <img src="/images/posters/@movie.PosterUrl" class="card-img-top" alt="@movie.Title" style="height: 350px; object-fit: cover;">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold mb-1">@movie.Title</h6>
+                        <p class="text-muted small mb-3">@movie.Genre | @movie.DurationMinutes min</p>
+                        <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-cema btn-sm w-100">View Info</a>
+                        
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <div class="d-flex gap-1 mt-2">
+                                <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-dark btn-sm flex-fill">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-outline-danger btn-sm flex-fill">Delete</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
