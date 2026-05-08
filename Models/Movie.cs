@@ -1,44 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-namespace cema.Models
+namespace CemaApp.Models
 {
-    [Table("Movie")] // 2. Force SQL Server to name the table 
-
+    [Table("Movie")]
     public class Movie
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(200)]
-        public string Title { get; set; } = string.Empty;
+        public string Title { get; set; }
 
-        [MaxLength(1000)]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Genre { get; set; } = string.Empty;
+        public string Genre { get; set; }
 
         public int DurationMinutes { get; set; }
 
-        [MaxLength(50)]
-        public string? Language { get; set; }
-
         public DateTime ReleaseDate { get; set; }
 
-        [MaxLength(10)]
-        public string? Rating { get; set; }
+        public string? PosterUrl { get; set; }
 
         public bool IsActive { get; set; } = true;
 
-        public string? Poster { get; set; }
-        public string? Trailer { get; set; }
-
-        // Navigation properties
-        public ICollection<Screening> Screenings { get; set; } = new List<Screening>();
+        // Navigation
+        public ICollection<Screening> Screenings { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-using cema.Models;
+using CemaApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace cema.Controllers
+namespace CemaApp.Controllers
 {
     public class HomeController : Controller
     {
