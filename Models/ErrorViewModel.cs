@@ -1,4 +1,4 @@
-namespace cema.Models
+namespace CemaApp.Models
 {
     public class ErrorViewModel
     {
