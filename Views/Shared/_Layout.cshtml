@@ -7,38 +7,133 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CemaApp.styles.css" asp-append-version="true" />
+    <style>
+            body {
+                background-color: #0f0f0f;
+                color: white;
+                font-family: 'Segoe UI', sans-serif;
+            }
+
+            /* NAVBAR */
+            .cinema-navbar {
+                background-color: #121212;
+                border-bottom: 1px solid #262626;
+                padding: 14px 0;
+            }
+
+            .cinema-logo {
+                color: #ffffff !important;
+                font-size: 24px;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-decoration: none;
+            }
+
+                .cinema-logo span {
+                    color: #dc2626;
+                }
+
+            .navbar-nav .nav-link {
+                color: #b3b3b3 !important;
+                margin-left: 18px;
+                transition: 0.3s;
+                font-weight: 500;
+            }
+
+                .navbar-nav .nav-link:hover {
+                    color: white !important;
+                }
+
+            /* FOOTER */
+            .cinema-footer {
+                background-color: #121212;
+                border-top: 1px solid #262626;
+                padding: 20px 0;
+                margin-top: 60px;
+            }
+
+                .cinema-footer p,
+                .cinema-footer a {
+                    color: #8b8b8b;
+                    text-decoration: none;
+                    margin: 0;
+                }
+
+                    .cinema-footer a:hover {
+                        color: white;
+                    }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CemaApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg cinema-navbar">
+            <div class="container">
+
+                <a class="cinema-logo navbar-brand"
+                       asp-area=""
+                       asp-controller="Home"
+                       asp-action="Index">
+                    CEMA<span>.</span>
+                </a>
+
+                <button class="navbar-toggler bg-light"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+
+                    <ul class="navbar-nav ms-auto">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link"
+                                   asp-area=""
+                                   asp-controller="Home"
+                                   asp-action="Index">
+                                Home
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link"
+                                   asp-controller="Movies"
+                                   asp-action="Index">
+                                Movies
+                            </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                   asp-controller="Bookings"
+                                   asp-action="Index">
+                                Bookings
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                   asp-area=""
+                                   asp-controller="Home"
+                                   asp-action="Privacy">
+                                Privacy
+                            </a>
+                        </li>
+
                     </ul>
+
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
+   
+    <main role="main">
+        @RenderBody()
+    </main>
+    <footer class="cinema-footer">
         <div class="container">
-            &copy; 2026 - CemaApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - CemaApp - Privacy
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
