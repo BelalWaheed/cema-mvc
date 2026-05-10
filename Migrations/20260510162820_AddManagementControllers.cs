@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CemaApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCemaSchema : Migration
+    public partial class AddManagementControllers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -271,41 +271,6 @@ namespace CemaApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SeatLock",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ScreeningId = table.Column<int>(type: "int", nullable: false),
-                    SeatId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SeatLock", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SeatLock_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SeatLock_Screening_ScreeningId",
-                        column: x => x.ScreeningId,
-                        principalTable: "Screening",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SeatLock_Seat_SeatId",
-                        column: x => x.SeatId,
-                        principalTable: "Seat",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BookingSeat",
                 columns: table => new
                 {
@@ -405,26 +370,6 @@ namespace CemaApp.Migrations
                 table: "Seat",
                 columns: new[] { "HallId", "Row", "Number" },
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SeatLock_ExpiresAt",
-                table: "SeatLock",
-                column: "ExpiresAt");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SeatLock_ScreeningId",
-                table: "SeatLock",
-                column: "ScreeningId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SeatLock_SeatId",
-                table: "SeatLock",
-                column: "SeatId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SeatLock_UserId",
-                table: "SeatLock",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -447,9 +392,6 @@ namespace CemaApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "BookingSeat");
-
-            migrationBuilder.DropTable(
-                name: "SeatLock");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

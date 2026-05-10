@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 namespace CemaApp.Models
 {
@@ -15,7 +15,6 @@ namespace CemaApp.Models
         public DbSet<Screening> Screenings { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<BookingSeat> BookingSeats { get; set; }
-        public DbSet<SeatLock> SeatLocks { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,35 +69,12 @@ namespace CemaApp.Models
                 .HasForeignKey(bs => bs.SeatId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //  Screening -> SeatLocks
-            modelBuilder.Entity<Screening>()
-                .HasMany(s => s.SeatLocks)
-                .WithOne(sl => sl.Screening)
-                .HasForeignKey(sl => sl.ScreeningId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            //  Seat -> SeatLocks
-            modelBuilder.Entity<Seat>()
-                .HasMany(s => s.SeatLocks)
-                .WithOne(sl => sl.Seat)
-                .HasForeignKey(sl => sl.SeatId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            //  User -> SeatLocks
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(u => u.SeatLocks)
-                .WithOne(sl => sl.User)
-                .HasForeignKey(sl => sl.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             // Unique constraint: Can't have duplicate seat in same hall
             modelBuilder.Entity<Seat>()
                 .HasIndex(s => new { s.HallId, s.Row, s.Number })
                 .IsUnique();
 
-            //  Index for cleaning expired locks quickly
-            modelBuilder.Entity<SeatLock>()
-                .HasIndex(sl => sl.ExpiresAt);
 
             // EF requires explicit configuration for decimal properties
             modelBuilder.Entity<Screening>()

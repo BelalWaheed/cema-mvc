@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CemaApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260508065442_InitialCemaSchema")]
-    partial class InitialCemaSchema
+    [Migration("20260510162820_AddManagementControllers")]
+    partial class AddManagementControllers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -268,43 +268,6 @@ namespace CemaApp.Migrations
                     b.ToTable("Seat");
                 });
 
-            modelBuilder.Entity("CemaApp.Models.SeatLock", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ScreeningId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SeatId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExpiresAt");
-
-                    b.HasIndex("ScreeningId");
-
-                    b.HasIndex("SeatId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SeatLock");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -506,33 +469,6 @@ namespace CemaApp.Migrations
                     b.Navigation("Hall");
                 });
 
-            modelBuilder.Entity("CemaApp.Models.SeatLock", b =>
-                {
-                    b.HasOne("CemaApp.Models.Screening", "Screening")
-                        .WithMany("SeatLocks")
-                        .HasForeignKey("ScreeningId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CemaApp.Models.Seat", "Seat")
-                        .WithMany("SeatLocks")
-                        .HasForeignKey("SeatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CemaApp.Models.ApplicationUser", "User")
-                        .WithMany("SeatLocks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Screening");
-
-                    b.Navigation("Seat");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -587,8 +523,6 @@ namespace CemaApp.Migrations
             modelBuilder.Entity("CemaApp.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("SeatLocks");
                 });
 
             modelBuilder.Entity("CemaApp.Models.Booking", b =>
@@ -611,15 +545,11 @@ namespace CemaApp.Migrations
             modelBuilder.Entity("CemaApp.Models.Screening", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("SeatLocks");
                 });
 
             modelBuilder.Entity("CemaApp.Models.Seat", b =>
                 {
                     b.Navigation("BookingSeats");
-
-                    b.Navigation("SeatLocks");
                 });
 #pragma warning restore 612, 618
         }

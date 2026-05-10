@@ -30,7 +30,11 @@ namespace CemaApp.Controllers
         {
             try
             {
-                var movie = await _context.Movies.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+                var movie = await _context.Movies
+                    .Include(m => m.Screenings)
+                    .ThenInclude(s => s.Hall)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(m => m.Id == id);
                 if (movie == null)
                 {
                     return NotFound();

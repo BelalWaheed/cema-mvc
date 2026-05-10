@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CemaApp.Models
 {
@@ -16,9 +16,8 @@ namespace CemaApp.Models
         public decimal Price { get; set; }
 
         // Navigation
-        public Movie Movie { get; set; }
-        public Hall Hall { get; set; }
-        public ICollection<Booking> Bookings { get; set; }
-        public ICollection<SeatLock> SeatLocks { get; set; } 
+        public Movie? Movie { get; set; }
+        public Hall? Hall { get; set; }
+        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[Authorize(Roles = "Admin")]
-public class DashboardController : Controller
+namespace CemaApp.Controllers
 {
-    public IActionResult Index()
+    [Authorize(Roles = "Admin")]
+    public class DashboardController : Controller
     {
-        return View();
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }

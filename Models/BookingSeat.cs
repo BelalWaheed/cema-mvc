@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CemaApp.Models
 {
@@ -13,7 +13,7 @@ namespace CemaApp.Models
         public int SeatId { get; set; }
 
         // Navigation
-        public Booking Booking { get; set; }
-        public Seat Seat { get; set; }
+        public Booking? Booking { get; set; }
+        public Seat? Seat { get; set; }
     }
 }
