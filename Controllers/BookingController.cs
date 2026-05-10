@@ -65,7 +65,11 @@ namespace CemaApp.Controllers
 
             if (success)
             {
-                return RedirectToAction("Index", "Dashboard");
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+                return RedirectToAction("Index", "Bookings");
             }
 
             ModelState.AddModelError("", "Could not confirm booking. Your selection may have expired.");
