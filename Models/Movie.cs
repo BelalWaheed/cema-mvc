@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace CemaApp.Models
 {
@@ -20,10 +20,12 @@ namespace CemaApp.Models
         public DateTime ReleaseDate { get; set; }
 
         public string? PosterUrl { get; set; }
+        
+        public string? TrailerUrl { get; set; }
 
         public bool IsActive { get; set; } = true;
 
         // Navigation
-        public ICollection<Screening> Screenings { get; set; }
+        public ICollection<Screening> Screenings { get; set; } = new List<Screening>();
     }
 }

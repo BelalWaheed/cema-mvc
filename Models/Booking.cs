@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CemaApp.Models
@@ -27,9 +27,9 @@ namespace CemaApp.Models
         public BookingStatus Status { get; set; } = BookingStatus.Pending;
 
         // Navigation
-        public ApplicationUser User { get; set; }
-        public Screening Screening { get; set; }
-        public ICollection<BookingSeat> BookingSeats { get; set; }
+        public ApplicationUser? User { get; set; }
+        public Screening? Screening { get; set; }
+        public ICollection<BookingSeat> BookingSeats { get; set; } = new List<BookingSeat>();
 
     }
 }

@@ -3,7 +3,37 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 <div class="container-fluid px-lg-5 mt-4">
-    <h2 class="mb-4 fw-bold">Now Showing</h2>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <h2 class="fw-bold m-0">Now Showing</h2>
+        
+        <form asp-action="Index" method="get" class="d-flex gap-2 filter-bar">
+            <div class="input-group input-group-sm" style="width: 250px;">
+                <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" name="searchString" value="@ViewBag.CurrentSearch" class="form-control bg-dark border-secondary text-white" placeholder="Search movies...">
+            </div>
+            
+            <select name="genre" class="form-select form-select-sm bg-dark border-secondary text-white" style="width: 150px;">
+                <option value="">All Genres</option>
+                @foreach (var g in ViewBag.Genres)
+                {
+                    @if (g == ViewBag.CurrentGenre)
+                    {
+                        <option value="@g" selected>@g</option>
+                    }
+                    else
+                    {
+                        <option value="@g">@g</option>
+                    }
+                }
+            </select>
+            
+            <button type="submit" class="btn btn-cema btn-sm px-3">Filter</button>
+            @if (!string.IsNullOrEmpty(ViewBag.CurrentSearch) || !string.IsNullOrEmpty(ViewBag.CurrentGenre))
+            {
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm"><i class="bi bi-x-lg"></i></a>
+            }
+        </form>
+    </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
         @foreach (var movie in Model)
         {
@@ -27,4 +57,14 @@
             </div>
         }
     </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-search fs-1 text-muted d-block mb-3"></i>
+            <h4 class="text-white">No movies found</h4>
+            <p class="text-muted">Try adjusting your search or filters.</p>
+            <a asp-action="Index" class="btn btn-outline-danger mt-2">Clear All Filters</a>
+        </div>
+    }
 </div>

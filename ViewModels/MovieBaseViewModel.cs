@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
 namespace CemaApp.ViewModels
@@ -22,6 +22,10 @@ namespace CemaApp.ViewModels
         [Required]
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
+
+        [Display(Name = "YouTube Trailer URL")]
+        [Url(ErrorMessage = "Please enter a valid URL")]
+        public string? TrailerUrl { get; set; }
     }
 
     // 2. The Create Class: Inherits the base properties and adds what is strictly needed for Creation

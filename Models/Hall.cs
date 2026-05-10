@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CemaApp.Models
@@ -17,7 +17,7 @@ namespace CemaApp.Models
         public int SeatsPerRow { get; set; }
 
         // Navigation
-        public ICollection<Screening> Screenings { get; set; }
-        public ICollection<Seat> Seats { get; set; }
+        public ICollection<Screening> Screenings { get; set; } = new List<Screening>();
+        public ICollection<Seat> Seats { get; set; } = new List<Seat>();
     }
 }

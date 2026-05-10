@@ -16,11 +16,35 @@ namespace CemaApp.Controllers
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
-        // Public View: Anyone can see the list of movies
+        // Public View: Anyone can see the list of movies with optional filtering
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchString, string? genre)
         {
-            var movies = await _context.Movies.AsNoTracking().ToListAsync();
+            var query = _context.Movies.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(m => m.Title.Contains(searchString) || m.Description.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(genre))
+            {
+                query = query.Where(m => m.Genre == genre);
+            }
+
+            var movies = await query.ToListAsync();
+            
+            // Get unique genres for the filter dropdown
+            ViewBag.Genres = await _context.Movies
+                .AsNoTracking()
+                .Select(m => m.Genre)
+                .Distinct()
+                .OrderBy(g => g)
+                .ToListAsync();
+
+            ViewBag.CurrentSearch = searchString;
+            ViewBag.CurrentGenre = genre;
+
             return View(movies);
         }
         // Public View: Anyone can see movie details
@@ -30,7 +54,11 @@ namespace CemaApp.Controllers
         {
             try
             {
-                var movie = await _context.Movies.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+                var movie = await _context.Movies
+                    .Include(m => m.Screenings)
+                    .ThenInclude(s => s.Hall)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(m => m.Id == id);
                 if (movie == null)
                 {
                     return NotFound();
@@ -92,6 +120,7 @@ namespace CemaApp.Controllers
                     DurationMinutes = model.DurationMinutes,
                     ReleaseDate = model.ReleaseDate,
                     PosterUrl = uniqueFileName,
+                    TrailerUrl = model.TrailerUrl,
                     IsActive = true
                 };
 
@@ -122,7 +151,8 @@ namespace CemaApp.Controllers
                 DurationMinutes = movie.DurationMinutes,
                 ReleaseDate = movie.ReleaseDate,
                 IsActive = movie.IsActive,
-                ExistingPosterUrl = movie.PosterUrl
+                ExistingPosterUrl = movie.PosterUrl,
+                TrailerUrl = movie.TrailerUrl
             };
 
             return View(model);
@@ -181,6 +211,7 @@ namespace CemaApp.Controllers
                 movie.DurationMinutes = model.DurationMinutes;
                 movie.ReleaseDate = model.ReleaseDate;
                 movie.IsActive = model.IsActive;
+                movie.TrailerUrl = model.TrailerUrl;
 
                 await _context.SaveChangesAsync();
 

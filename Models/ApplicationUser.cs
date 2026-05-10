@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,7 +21,6 @@ namespace CemaApp.Models
 
         // Navigation properties
         public ICollection<Booking> Bookings { get; set; }
-        public ICollection<SeatLock> SeatLocks { get; set; }
 
 
     }
