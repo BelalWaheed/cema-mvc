@@ -16,6 +16,34 @@
             <h5 class="fw-bold text-uppercase border-bottom border-secondary pb-2 mb-3" style="letter-spacing: 2px;">Synopsis</h5>
             <p class="lead text-secondary">@Model.Description</p>
 
+            @if (!string.IsNullOrEmpty(Model.TrailerUrl))
+            {
+                <h5 class="fw-bold text-uppercase border-bottom border-secondary pb-2 mb-3 mt-4" style="letter-spacing: 2px;">Trailer</h5>
+                <div class="ratio ratio-16x9 mb-4 shadow-lg rounded overflow-hidden">
+                    @{
+                        var videoId = "";
+                        if (Model.TrailerUrl.Contains("v="))
+                        {
+                            videoId = Model.TrailerUrl.Split("v=")[1].Split("&")[0];
+                        }
+                        else if (Model.TrailerUrl.Contains("youtu.be/"))
+                        {
+                            videoId = Model.TrailerUrl.Split("youtu.be/")[1].Split("?")[0];
+                        }
+                    }
+                    @if (!string.IsNullOrEmpty(videoId))
+                    {
+                        <iframe src="https://www.youtube.com/embed/@videoId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    }
+                    else
+                    {
+                        <div class="bg-dark d-flex align-items-center justify-content-center text-muted">
+                            Invalid Trailer URL
+                        </div>
+                    }
+                </div>
+            }
+
             <div class="mt-5 p-4 bg-dark rounded border border-secondary shadow-lg">
                 <h4 class="fw-bold mb-4 text-uppercase" style="letter-spacing: 1px;">Available Showtimes</h4>
                 

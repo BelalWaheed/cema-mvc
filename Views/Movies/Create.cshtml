@@ -1,4 +1,4 @@
-﻿@model CemaApp.ViewModels.MovieCreateViewModel
+@model CemaApp.ViewModels.MovieCreateViewModel
 
 @{
     ViewData["Title"] = "Add New Movie";
@@ -53,6 +53,13 @@
                                 <input type="file" asp-for="PosterImage" class="form-control" accept="image/*" />
                                 <span asp-validation-for="PosterImage" class="text-danger small"></span>
                                 <small class="text-info d-block mt-2">Required: JPG, PNG, or WebP format</small>
+                            </div>
+
+                             <div class="mb-4">
+                                <label asp-for="TrailerUrl" class="form-label text-muted small fw-bold text-uppercase">YouTube Trailer URL</label>
+                                <input asp-for="TrailerUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
+                                <span asp-validation-for="TrailerUrl" class="text-danger small"></span>
+                                <small class="text-info d-block mt-2">Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ</small>
                             </div>
 
                             <div class="alert alert-info" role="alert" style="background-color: #2b2b2b; border-color: #444; color: var(--text-muted);">

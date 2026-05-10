@@ -57,6 +57,13 @@
                                 <label asp-for="IsActive" class="form-check-label text-muted small fw-bold text-uppercase">Active Listing</label>
                             </div>
 
+                             <div class="mb-4">
+                                <label asp-for="TrailerUrl" class="form-label text-muted small fw-bold text-uppercase">YouTube Trailer URL</label>
+                                <input asp-for="TrailerUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
+                                <span asp-validation-for="TrailerUrl" class="text-danger small"></span>
+                                <small class="text-info d-block mt-2">Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ</small>
+                            </div>
+
                             <div class="mb-4">
                                 <label class="form-label text-muted small fw-bold text-uppercase">Replace Poster</label>
                                 <input type="file" asp-for="NewPosterImage" class="form-control" accept="image/*" />
